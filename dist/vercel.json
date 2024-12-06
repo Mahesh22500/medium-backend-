@@ -17,6 +17,10 @@
     {
       "src": "/post",
       "dest": "dist/index.js"
+    },
+    {
+        "src":"/test",
+        "dest":"dist/index.js"
     }
   ]
 }
