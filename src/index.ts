@@ -14,6 +14,10 @@ const app = new Hono<{
 }>
 ();
 
+app.get("/test",(c)=>{
+  return c.text("server is running")
+})
+
 app.use("/post/*", async (c, next) => {
   try {
     const header = c.req.header("Authorization");
@@ -27,7 +31,7 @@ app.use("/post/*", async (c, next) => {
     
       if (res.id) {
 
-        c.set('authorId',res.id)
+        c.set('authorId',res.id.toString())
     
         await next();
       }

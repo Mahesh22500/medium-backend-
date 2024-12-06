@@ -9,7 +9,7 @@ export const userRouter = new Hono();
 
 userRouter.post("/signup", async (c) => {
   const client = new PrismaClient();
-
+console.log("inside signup")
   try {
     const body = await c.req.json();
     const { email, name, password } = body;
@@ -24,12 +24,19 @@ userRouter.post("/signup", async (c) => {
       },
     });
 
+    console.log("user added",user)
+
+    console.log("Port",process.env.PORT)
+    console.log("secret ",process.env.SECRET_KEY)
+    console.log("dbUrl  ",process.env.DATABASE_URL)
+
     const token = await sign({ id: user.id }, process.env.SECRET_KEY || "");
+    console.log("token",token)
 
     return c.json({ jwt: token });
-  } catch (e) {
+  } catch (err:any) {
     c.status(400);
-    return c.json({ message: "Failed to create user" });
+    return c.json(err);
   }
 });
 
