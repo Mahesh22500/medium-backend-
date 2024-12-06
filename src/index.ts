@@ -1,8 +1,8 @@
 import { serve } from "@hono/node-server";
 import "dotenv/config";
 import { Hono } from "hono";
-import { userRouter } from "./routes/user.js";
 import { postRouter } from "./routes/post.js";
+import { userRouter } from "./routes/user.js";
 import { verify } from "hono/jwt";
 
 
