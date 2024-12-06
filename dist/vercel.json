@@ -1,26 +1,26 @@
 {
   "builds": [
     {
-      "src": "dist/index.js",
+      "src": "index.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/user",
-      "dest": "dist/index.js"
+      "dest": "index.js"
     },
     {
       "src": "/user/(.*)",
-      "dest": "dist/index.js"
+      "dest": "index.js"
     },
     {
       "src": "/post",
-      "dest": "dist/index.js"
+      "dest": "index.js"
     },
     {
         "src":"/test",
-        "dest":"dist/index.js"
+        "dest":"index.js"
     }
   ]
 }
