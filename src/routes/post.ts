@@ -10,11 +10,23 @@ export const postRouter = new Hono<{
 
 // get all posts
 
-postRouter.get("/bulk", async (c) => {
+postRouter.get("/", async (c) => {
   const client = new PrismaClient();
 
+  // console.log("Inside get all posts")
   try {
-    const posts = await client.post.findMany();
+    const posts = await client.post.findMany(
+      {
+        select:{
+          title:true,
+          published:true,
+          content:true,
+          author:true, 
+          category:true,
+          id:true 
+        }
+      }
+    );
 
     return c.json({ posts });
   } catch (err) {
@@ -29,12 +41,13 @@ postRouter.post("/", async (c) => {
   try {
     const body = await c.req.json();
 
-    const { title, content, published } = body;
+    const { title, content, published, category } = body;
     const authorId = await c.get("authorId");
 
     const post = await client.post.create({
       data: {
         title,
+        category,
         content,
         published,
         authorId,
@@ -57,7 +70,14 @@ postRouter.get("/:id", async (c) => {
     const post = await client.post.findFirst({
       where: {
         id,
-      },
+      },select:{
+        title:true,
+        published:true,
+        content:true,
+        author:true, 
+        category:true,
+        id:true 
+      }
     });
 
     return c.json({ post });
@@ -75,7 +95,7 @@ postRouter.put("/:id", async (c) => {
 
     const { id } = c.req.param();
 
-    const { title, content, published } = body;
+    const { title, content, published, category } = body;
     const authorId = c.get("authorId");
 
     const post = await client.post.update({
@@ -84,6 +104,7 @@ postRouter.put("/:id", async (c) => {
       },
       data: {
         title,
+        category,
         content,
         published,
         authorId,

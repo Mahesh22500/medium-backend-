@@ -18,7 +18,9 @@ model User {
 
   id String @id @default(uuid()) 
   email String @unique
-  name String?
+  firstName String?
+  lastName String?
+  username String?
   password String 
   posts Post[]
 }
@@ -28,6 +30,7 @@ model Post {
 
   id String @id @default(uuid())
   title String 
+  category String
   content String 
   published Boolean @default(false)
   authorId String 
